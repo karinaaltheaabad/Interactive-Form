@@ -40,16 +40,14 @@ title.addEventListener('input', (e) => {
 color.disabled = "true";
 design.addEventListener('input', (e) => {
     
-    //NOT DONE
-    //SEE IF YOU CAN SET TO DISABLED AGAIN IF VALUE IS NOT JS PUNS OR HEART JS
     color.disabled = false; 
 
     if (e.target.value == "js puns") {
         for (let i = 1; i <= theme.length-1; i++) {
             if (theme[i].getAttribute("data-theme") != "js puns") {
-                theme[i].hidden = "true";
+                theme[i].hidden = true;
             } else {
-                theme[i].hidden = "false";
+                theme[i].hidden = false;
             }
         }
     } 
@@ -127,16 +125,33 @@ const cvvIsValid = (cvv) => {
     return /\d{3}/.test(cvv);
 }
 
-//validate field 
+//validates field with indicators when incorrect  
 const validateField = (field) => {
 
-    if (field == 'activities') {
+    if (field.id == 'activities') {
         activities.classList.add('not-valid');
         activities.classList.remove('valid');
+        activities.lastElementChild.style.display = 'inline';
+    } else {
+        field.parentElement.classList.add('not-valid');
+        field.parentElement.classList.remove('valid');
+        field.parentElement.lastElementChild.style.display = 'inline';
     }
+}
 
-    field.parentElement.classList.add('not-valid');
-    field.parentElement.classList.remove('valid');
+
+//validates field and shows correct indicators
+const correctField = (field) => {
+    
+    if (field.id == "activities") {
+        activities.classList.add('valid');
+        activities.classList.remove('not-valid');
+        activities.lastElementChild.style.display = 'none';
+    } else {
+        field.parentElement.classList.add('valid');
+        field.parentElement.classList.remove('not-valid');
+        field.parentElement.lastElementChild.style.display = 'none';
+    }
 }
 
 
@@ -147,11 +162,15 @@ form.addEventListener('submit', (e) => {
     if (!nameIsValid(name.value)) {
         e.preventDefault();
         validateField(name);
+    } else {
+        correctField(name);
     }
 
     if (!emailIsValid(email.value)) {
         e.preventDefault();
         validateField(email);
+    } else {
+        correctField(email);
     }
 
     for (let i = 0; i < checkboxes.length; i++) {
@@ -162,24 +181,31 @@ form.addEventListener('submit', (e) => {
 
     if (count == 0) {
         e.preventDefault();
-        activities.classList.add('not-valid');
-        activities.classList.remove('valid');
+        validateField(activities);
+    } else {
+        correctField(activities);
     }
 
     if (payment.value == "credit-card") {
         if (!creditCardIsValid(ccNum.value)) {
             e.preventDefault();
             validateField(ccNum);
+        } else {
+            correctField(ccNum);
         }
 
         if (!zipcodeIsValid(zipcode.value)) {
             e.preventDefault();
             validateField(zipcode);
+        } else {
+            correctField(zipcode);
         }
 
         if (!cvvIsValid(cvv.value)) {
             e.preventDefault();
             validateField(cvv);
+        } else {
+            correctField(cvv);
         }
     }
 });
@@ -187,14 +213,13 @@ form.addEventListener('submit', (e) => {
 //accessibility function for focus events
 //adds focus className if focus triggers
 const accessibilityFocus = (e) => {
-    e.target.parentNode.className = 'focus';
+    e.target.parentElement.className = 'focus';
 }
 
 //accessibility function for blur events 
 //removes focus className if blur triggers
 const accessibilityBlur = (e) => {
-
-    e.target.parentElement('label').classList.remove('focus');
+    e.target.parentElement.classList.remove('focus');
 }
 
 for (let i = 0; i < checkboxes.length; i++) {
