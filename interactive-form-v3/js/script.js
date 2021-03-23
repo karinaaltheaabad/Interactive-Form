@@ -41,12 +41,13 @@ color.disabled = "true";
 design.addEventListener('input', (e) => {
     
     color.disabled = false; 
-
     if (e.target.value == "js puns") {
+
         for (let i = 1; i <= theme.length-1; i++) {
             if (theme[i].getAttribute("data-theme") != "js puns") {
                 theme[i].hidden = true;
             } else {
+                theme[i].selected = true; 
                 theme[i].hidden = false;
             }
         }
@@ -57,6 +58,7 @@ design.addEventListener('input', (e) => {
             if (theme[i].getAttribute("data-theme") != "heart js") {
                 theme[i].hidden = true;
             } else {
+                theme[i].selected = true;
                 theme[i].hidden = false;
             }
         }
@@ -76,6 +78,7 @@ activities.addEventListener("change", (e) => {
     totalDisplay += `Total: $${total}`;
     totalCost.innerHTML = totalDisplay; 
 });
+
 
 //payment UI updates depending on payment selection 
 payment.children[1].selected = true;
@@ -178,6 +181,8 @@ form.addEventListener('submit', (e) => {
             count++;
         }
     }
+
+    checkConflictingTime(count);
 
     if (count == 0) {
         e.preventDefault();
