@@ -182,8 +182,6 @@ form.addEventListener('submit', (e) => {
         }
     }
 
-    checkConflictingTime(count);
-
     if (count == 0) {
         e.preventDefault();
         validateField(activities);
