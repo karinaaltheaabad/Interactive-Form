@@ -114,18 +114,18 @@ const emailIsValid = (emailInput) => {
 
 //helper regex functions to cc number
 const creditCardIsValid = (cc) => {
-    return /\d{13,16}/.test(cc);
+    return /^\d{13,16}$/.test(cc);
 }
 
 //helper regex functions to validate zipcode
 const zipcodeIsValid = (zip) => {
-    return /\d{5}/.test(zip);
+    return /^\d{5}$/.test(zip);
     
 }
 
 //helper regex functions to validate cvv
 const cvvIsValid = (cvv) => {
-    return /\d{3}/.test(cvv);
+    return /^\d{3}$/.test(cvv);
 }
 
 //validates field with indicators when incorrect  
